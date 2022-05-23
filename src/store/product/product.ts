@@ -1,4 +1,4 @@
-import { getProductList } from "@/service/product/product"
+import { getProductDetail, getProductList } from "@/service/product/product"
 import { Module } from "vuex"
 import { IRootState } from "../types"
 import { IProductState } from "./types"
@@ -37,6 +37,10 @@ const productModule: Module<IProductState, IRootState> = {
       )
       console.log(productList)
       commit("changeProductList", productList)
+    },
+    async getProductDetailAction(context, payload) {
+      const res = await getProductDetail(payload.id)
+      return res
     }
   }
 }

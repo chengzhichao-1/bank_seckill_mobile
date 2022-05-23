@@ -1,17 +1,42 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/vant/3.4.8/index.min.css" />
+  <script type="text/javascript">
+      var mobileAgent = new Array("iphone", "ipod", "ipad", "android", "mobile", "blackberry", "webos", "incognito", "webmate", "bada", "nokia", "lg", "ucweb", "skyfire");
+      var browser = navigator.userAgent.toLowerCase();
+      var isMobile = false;
+      for (var i=0; i<mobileAgent.length; i++){
+        if (browser.indexOf(mobileAgent[i])!=-1){
+          isMobile = true;
+          //  location.href = 'http://www.xiezuoye.top/sanxiangseckillmobile/';
+           break;
+         }
+       }
+       if (!isMobile) {
+        location.href = 'http://www.xiezuoye.top/sanxiangseckill/';
+       }
+    </script>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://unpkg.com/vue-router@next"></script>
+  <script src="https://unpkg.com/vuex@next"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vant/3.4.8/vant.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.24.0/axios.min.js"></script>
+</body>
+
 </html>

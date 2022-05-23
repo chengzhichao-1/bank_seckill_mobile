@@ -12,6 +12,7 @@ import root from ".."
 import {
   getCustomerByPhoneNumber,
   getMyInfo,
+  getMySecKill,
   refineInformation
 } from "@/service/customer/customer"
 
@@ -97,6 +98,8 @@ const loginModule: Module<ILoginState, IRootState> = {
         if (status2 === 200) {
           Toast.success("注册成功")
           router.push("/login")
+        } else {
+          Toast.success("该手机号已注册")
         }
       } else {
         Toast.fail("验证码错误")
@@ -128,6 +131,27 @@ const loginModule: Module<ILoginState, IRootState> = {
           noToast
         })
       }
+    },
+    async getMyProductListAction(context, payload) {
+      const {
+        orderTimeState,
+        orderPaymentState,
+        startDate,
+        endDate,
+        curPage,
+        pageSize,
+        customerID
+      } = payload
+      const myProductList = await getMySecKill(
+        customerID,
+        orderTimeState,
+        orderPaymentState,
+        startDate,
+        endDate,
+        curPage,
+        pageSize
+      )
+      return myProductList
     }
   }
 }

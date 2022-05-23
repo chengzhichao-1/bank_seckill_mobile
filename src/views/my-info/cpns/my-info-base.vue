@@ -78,6 +78,25 @@
       >
         <template #btns>
           <van-button
+            @click="isShowOverlay = true"
+            style="float: right; overflow: hidden; margin: 0.5rem"
+            color="#91bef4"
+          >
+            {{ !!userBaseInfo?.customerBankCard ? "解绑" : "绑定" }}
+          </van-button>
+          <van-overlay
+            class="my-overlay"
+            :show="isShowOverlay"
+            @click="isShowOverlay = false"
+          >
+            <bind-card
+              @closeOverlay=";(isShowOverlay = false) || (isEdit = false)"
+              :userBaseInfo="userBaseInfo"
+              class="wrapper"
+              @click.stop
+            />
+          </van-overlay>
+          <van-button
             class="my-button"
             round
             color="var(--theme-color)"
@@ -102,27 +121,47 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from "vue"
+import { computed, defineComponent, ref } from "vue"
 import { useStore } from "vuex"
+
 import ZcForm from "@/base-ui/form"
+import BindCard from "./bind-card.vue"
+import { Toast } from "vant"
 
 import { contentFormConfig } from "../config/content.config"
 
 export default defineComponent({
   components: {
-    ZcForm
+    ZcForm,
+    BindCard
   },
   setup() {
     const store = useStore()
-    const userBaseInfo = computed(() => store.state.login.userBaseInfo)
+    const userBaseInfo = computed(
+      () => ref(store.state.login.userBaseInfo).value
+    )
+    // watch(
+    //   userBaseInfo,
+    //   (newVal, oldVal) => {
+    //     console.log(newVal, oldVal, userBaseInfo)
+    //   },
+    //   {
+    //     deep: true,
+    //     immediate: true
+    //   }
+    // )
+
     const isEdit = ref(false)
+    const isShowOverlay = ref(false) // 遮罩层
 
     const handleSubmit = (value: any) => {
       store.dispatch("login/refineInformationAction", value)
       console.log(111, value)
+      Toast.success("完善成功，快去购买理财产品吧~")
     }
 
     return {
+      isShowOverlay,
       userBaseInfo,
       isEdit,
       contentFormConfig,
@@ -133,6 +172,16 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+.my-overlay {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  .wrapper {
+    background-color: #fff;
+    border-radius: 0.2564rem;
+    margin: 0.5128rem;
+  }
+}
 .top {
   display: flex;
   padding: 0 0.9231rem;

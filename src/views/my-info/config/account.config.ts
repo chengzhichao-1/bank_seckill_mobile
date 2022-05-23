@@ -44,3 +44,29 @@ export const cardRule = [
     trigger: "onBlur"
   }
 ]
+
+export const codeRule = [
+  {
+    required: true,
+    message: "验证码是必填内容~",
+    trigger: "onBlur"
+  },
+  {
+    pattern: /^[0-9]{4}$/,
+    message: "请输入4位验证码~",
+    trigger: "onBlur"
+  }
+]
+
+export const passwordRule = [
+  {
+    required: true,
+    message: "密码是必填内容~",
+    trigger: "onBlur"
+  },
+  {
+    pattern: /^[0-9]{6}$/,
+    message: "请填写6位数字密码~",
+    trigger: "onBlur"
+  }
+]

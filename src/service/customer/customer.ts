@@ -138,7 +138,6 @@ export function refineInformation(
 export function bindCard(
   customerPhoneNumber: string,
   customerBankCard: string,
-  UUid: string,
   code: string
 ) {
   return yhyRequest.post<any>({
@@ -147,8 +146,6 @@ export function bindCard(
       customerPhoneNumber +
       "&customerBankCard=" +
       customerBankCard +
-      "&UUid=" +
-      UUid +
       "&code=" +
       code
   })

@@ -1,7 +1,9 @@
 <template>
-  <nav-header />
-  <router-view />
-  <nav-footer />
+  <nav-header class="top" />
+  <router-view class="content" />
+  <nav-footer
+    v-if="$route.fullPath !== '/login' && $route.fullPath !== '/register'"
+  />
 </template>
 
 <script lang="ts">
@@ -20,4 +22,15 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+}
+.content {
+  margin-top: 1.5385rem;
+}
+</style>

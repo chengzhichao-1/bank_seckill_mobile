@@ -1,7 +1,7 @@
 import { telRule, passwordRule } from "./account.config"
 
 export const contentFormConfig = {
-  title: "个人账号登陆",
+  title: "个人账号登录",
   propList: [
     {
       name: "tel",

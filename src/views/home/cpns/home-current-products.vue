@@ -12,7 +12,7 @@
         {{ item.time }}
       </div>
     </div>
-    <div class="current-product-detail">
+    <!-- <div class="current-product-detail">
       <div class="sec-kill-ing">正在秒杀中</div>
       <h4>{{ currentProducts[currentIndex]?.name }}</h4>
       <div class="item">
@@ -77,12 +77,17 @@
       <div class="btn">
         <div class="qiang">抢</div>
       </div>
-    </div>
+    </div> -->
+    <product-detail-info
+      :currentProducts="currentProducts"
+      :currentIndex="currentIndex"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue"
+import ProductDetailInfo from "@/components/product-detail-info"
 
 export default defineComponent({
   props: {
@@ -90,6 +95,9 @@ export default defineComponent({
       type: Array,
       required: true
     }
+  },
+  components: {
+    ProductDetailInfo
   },
   setup() {
     const currentIndex = ref(0)

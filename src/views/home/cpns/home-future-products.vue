@@ -6,6 +6,7 @@
         class="product-detail"
         v-for="(item, index) in futureProducts"
         :key="index"
+        @click="$router.push(`/productdetail/${item.activityID}`)"
       >
         <h4>{{ item?.name }}</h4>
         <div class="item">

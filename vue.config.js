@@ -1,7 +1,13 @@
+/* eslint-disable */
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin
+
 module.exports = {
   // 1.配置方式一: CLI提供的属性
   outputDir: "./build",
-  // publicPath: './',
+  publicPath:
+    process.env.NODE_ENV === "production" ? "/sanxiangseckillmobile" : "/",
+  // publicPath: "/",
   devServer: {
     proxy: {
       "^/api/hyh": {
@@ -26,7 +32,26 @@ module.exports = {
       alias: {
         components: "@/components"
       }
-    }
+    },
+    externals: {
+      vue: "Vue",
+      "vue-router": "VueRouter",
+      vuex: "Vuex",
+      vant: "vant",
+      axios: "axios"
+    },
+    plugins: [new BundleAnalyzerPlugin()]
+  },
+  chainWebpack: (config) => {
+    config.module
+      .rule("images")
+      .test(/\.(png|jpe?g|gif)(\?.*)?$/)
+      .use("image-webpack-loader")
+      .loader("image-webpack-loader")
+      .options({
+        bypassOnDebug: true
+      })
+      .end()
   }
   // configureWebpack: (config) => {
   //   config.resolve.alias = {

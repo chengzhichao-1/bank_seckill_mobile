@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
+import { defineComponent, ref, watch } from "vue"
 
 export default defineComponent({
   emits: ["handleSubmit"],
@@ -67,17 +67,26 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     let formData: any = null
-    if (!props.modelValue) {
-      const formItems = props.contentFormConfig?.propList ?? []
-      const formOriginData: any = {}
+    watch(
+      () => props.modelValue,
+      () => {
+        if (!props.modelValue) {
+          const formItems = props.contentFormConfig?.propList ?? []
+          const formOriginData: any = {}
 
-      for (const item of formItems) {
-        formOriginData[item.name] = ""
+          for (const item of formItems) {
+            formOriginData[item.name] = ""
+          }
+          formData = ref(formOriginData)
+        } else {
+          formData = ref({ ...props.modelValue })
+        }
+      },
+      {
+        deep: true,
+        immediate: true
       }
-      formData = ref(formOriginData)
-    } else {
-      formData = ref({ ...props.modelValue })
-    }
+    )
 
     const showPicker = ref(false)
 
@@ -103,7 +112,7 @@ export default defineComponent({
 .zc-form {
   display: flex;
   align-items: center;
-  height: calc(100vh - 5.5rem);
+  height: calc(100vh - 1.5385rem);
   .bgc {
     position: absolute;
     top: 0;
@@ -115,7 +124,8 @@ export default defineComponent({
     background-size: 100% 100%;
   }
   .content {
-    width: 100%;
+    // width: 10rem;
+    // box-sizing: border-box;
     padding: 0.5128rem 0.7692rem;
     background-color: #fff;
     h3 {
@@ -124,6 +134,7 @@ export default defineComponent({
       font-size: 0.5128rem;
       text-align: center;
       margin: 0;
+      width: calc(10rem - 1.5385rem);
       &::after {
         position: absolute;
         bottom: 0;

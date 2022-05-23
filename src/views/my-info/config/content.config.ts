@@ -40,14 +40,15 @@ export const contentFormConfig = {
       name: "customerBankCard",
       type: "number",
       label: "卡号",
-      placeholder: "请输入卡号",
+      placeholder: "请绑定卡号",
+      disabled: true,
       rules: cardRule
-    },
-    {
-      name: "codeButton",
-      type: "number",
-      label: "验证码",
-      placeholder: "请输入验证码"
     }
+    // {
+    //   name: "codeButton",
+    //   type: "number",
+    //   label: "验证码",
+    //   placeholder: "请输入验证码"
+    // }
   ]
 }
