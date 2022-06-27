@@ -56,7 +56,7 @@
       <van-pagination
         v-model="newCurPage"
         :total-items="myProductList.total_records"
-        :show-page-size="pageSize"
+        :items-per-page="pageSize"
         force-ellipses
       />
     </template>

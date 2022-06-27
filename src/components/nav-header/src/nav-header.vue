@@ -44,7 +44,7 @@
           @click=";(isShowPopup = false) || $router.push('/login')"
         >
           <div class="wrap"><span class="icon icon-denglu-copy"></span></div>
-          <p>登录</p>
+          <p>{{ isLogin ? "退出登录" : "登录" }}</p>
         </div>
       </div>
       <div class="line">
@@ -76,13 +76,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
+import { defineComponent, ref, computed } from "vue"
+// import localCache from "@/utils/cache"
+import { useStore } from "vuex"
 
 export default defineComponent({
   setup() {
     const isShowPopup = ref(false)
+    const store = useStore()
+    const isLogin = computed(() =>
+      ref(store.state.phone).value ? true : false
+    )
     return {
-      isShowPopup
+      isShowPopup,
+      isLogin
     }
   }
 })

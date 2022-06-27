@@ -61,7 +61,7 @@ export default defineComponent({
       // 再次点击则取消
       if (sortOptionsOriginData.value[index].state === state) {
         sortOptionsOriginData.value[index].state = SortType.UNSORTED
-        emit("sortOptionsChange", prop, state)
+        emit("sortOptionsChange", prop, SortType.UNSORTED)
         return
       }
 

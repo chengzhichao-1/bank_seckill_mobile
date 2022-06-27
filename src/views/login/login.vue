@@ -28,11 +28,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, onMounted } from "vue"
 import { contentFormConfig } from "./config/content.config"
 import { useStore } from "vuex"
 import { useRouter } from "vue-router"
 import ZcForm from "@/base-ui/form"
+import localCache from "@/utils/cache"
+import { resetLoginState } from "@/store"
 
 export default defineComponent({
   components: {
@@ -49,6 +51,11 @@ export default defineComponent({
     const toRegister = () => {
       router.push("/register")
     }
+
+    onMounted(() => {
+      localCache.clearCache()
+      resetLoginState()
+    })
 
     return {
       contentFormConfig,

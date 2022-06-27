@@ -11,11 +11,11 @@ module.exports = {
   devServer: {
     proxy: {
       "^/api/hyh": {
-        target: "http://124.221.252.162:8077",
+        target: "http://124.221.252.162:8077", // 后台接口地址
         pathRewrite: {
-          "^/api/hyh": ""
+          "^/api/hyh": "" // /api/hyh -> ""
         },
-        changeOrigin: true
+        changeOrigin: true //是否跨域
       },
       "^/api/yhy": {
         target: "http://124.221.252.162:8082",

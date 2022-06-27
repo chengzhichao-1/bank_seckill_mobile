@@ -35,6 +35,10 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserAccountInfo(state, userAccountInfo: any) {
       state.userAccountInfo = userAccountInfo
+    },
+    resetLoginInfo(state) {
+      state.userAccountInfo = {}
+      state.userBaseInfo = {}
     }
   },
   actions: {

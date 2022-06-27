@@ -13,6 +13,9 @@ const store = createStore<IRootState>({
   mutations: {
     changePhone(state, phone: string) {
       state.phone = phone
+    },
+    resetPhone(state) {
+      state.phone = ""
     }
   },
   actions: {},
@@ -26,6 +29,11 @@ const store = createStore<IRootState>({
 
 export function setupStore(): void {
   store.dispatch("login/loadLocalLogin")
+}
+
+export function resetLoginState(): void {
+  store.commit("resetPhone")
+  store.commit("login/resetLoginInfo")
 }
 
 export default store
