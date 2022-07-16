@@ -1,4 +1,5 @@
 import { yhyRequest } from ".."
+import md5 from "js-md5"
 
 enum LoginAPI {
   enroll = "/enroll", // 注册
@@ -12,7 +13,7 @@ export function enroll(customerPhoneNumber: string, customerPassword: string) {
     url: LoginAPI.enroll,
     params: {
       customerPhoneNumber,
-      customerPassword
+      customerPassword: md5(customerPassword)
     }
   })
 }
@@ -34,7 +35,7 @@ export function loginByPassword(
     url: LoginAPI.loginByPassword,
     data: {
       customerPhoneNumber,
-      customerPassword
+      customerPassword: md5(customerPassword)
     }
   })
 }
