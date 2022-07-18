@@ -47,19 +47,15 @@
         color="var(--theme-color)"
         v-if="
           !isNaN(
-            parseInt(
-              (currentProducts[currentIndex]?.remainAmount /
-                currentProducts[currentIndex]?.totalAmount) *
-                100
-            )
+            (100.0 * currentProducts[currentIndex].remainAmount) /
+              currentProducts[currentIndex].totalAmount
           )
         "
         :percentage="
-          parseInt(
-            (currentProducts[currentIndex]?.remainAmount /
-              currentProducts[currentIndex]?.totalAmount) *
-              100
-          )
+          (
+            (100.0 * currentProducts[currentIndex].remainAmount) /
+            currentProducts[currentIndex].totalAmount
+          ).toFixed(2)
         "
         stroke-width="0.5128rem"
       />
