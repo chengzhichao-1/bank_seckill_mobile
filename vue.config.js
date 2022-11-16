@@ -23,6 +23,13 @@ module.exports = {
           "^/api/yhy": ""
         },
         changeOrigin: true
+      },
+      "^/api/czc": {
+        target: "http://localhost:3000",
+        pathRewrite: {
+          "^/api/czc": "/"
+        },
+        changeOrigin: true
       }
     }
   },

@@ -46,8 +46,9 @@ const loginModule: Module<ILoginState, IRootState> = {
       const { tel, password, noToast = false } = payload
       console.log(tel, password)
 
-      const loginCode = await loginByPassword(tel, password)
-      if (loginCode === 200) {
+      const loginResponse = await loginByPassword(tel, password)
+      console.log(loginResponse)
+      if (loginResponse.status === 200) {
         // 1. 存储手机号
         root.commit("changePhone", tel)
         localCache.setCache("phone", tel)
@@ -67,6 +68,9 @@ const loginModule: Module<ILoginState, IRootState> = {
 
         // 5. 路由跳转
         if (!noToast) router.push("/")
+
+        // 6.token存储
+        localCache.setCache("token", loginResponse.message.token)
       } else {
         Toast.fail("手机密码错误")
       }
