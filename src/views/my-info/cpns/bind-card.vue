@@ -61,11 +61,7 @@ import { useStore } from "vuex"
 import { cardRule, codeRule, passwordRule } from "../config/account.config"
 
 import { sendCode } from "@/service/login/login"
-import {
-  bindCard,
-  unbindCard,
-  setPayPassword
-} from "@/service/customer/customer"
+import { bindCard, unbindCard } from "@/service/customer/customer"
 
 import { Toast } from "vant"
 
@@ -97,46 +93,48 @@ export default defineComponent({
       }, 1000)
       const res = await sendCode(customerPhoneNumber.value)
       if (res === 200) {
-        Toast.success("已发送验证码")
+        Toast.success(res)
       }
     }
 
     const handleSubmit = async () => {
       if (props.userBaseInfo?.customerBankCard) {
         const res = await unbindCard(
-          customerBankCard.value,
+          customerPhoneNumber.value,
           bankCardPassword.value
         )
-        if (res === 200) {
+        if (res.status === 200) {
           Toast.success("卡号解绑成功")
           store.dispatch("login/accountLoginAction", {
             tel: customerPhoneNumber.value,
             password: props.userBaseInfo.customerPassword,
-            noToast: true
+            noToast: true,
+            reLogin: true
           })
           init()
           emit("closeOverlay")
         } else {
-          Toast.fail("密码错误")
+          // Toast.fail("密码错误")
         }
       } else {
         const res = await bindCard(
           customerPhoneNumber.value,
           customerBankCard.value,
+          bankCardPassword.value,
           code.value
         )
-        if (res === 400) {
-          Toast.fail("验证码错误")
-        } else if (res === 200) {
-          await setPayPassword(customerBankCard.value, bankCardPassword.value)
+        if (res.status === 200) {
           Toast.success("卡号绑定成功")
           store.dispatch("login/accountLoginAction", {
             tel: customerPhoneNumber.value,
             password: props.userBaseInfo.customerPassword,
-            noToast: true
+            noToast: true,
+            reLogin: true
           })
           init()
           emit("closeOverlay")
+        } else {
+          // Toast.fail("验证码错误或银行卡已被注册")
         }
       }
     }

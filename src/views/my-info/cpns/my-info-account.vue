@@ -9,7 +9,7 @@
       </div>
       <div class="is-perfect">
         {{
-          !!userAccountInfo?.customerName && !!userBaseInfo?.customerBankCard
+          !!userBaseInfo?.customerName && !!userBaseInfo?.customerBankCard
             ? "资料已完善"
             : "资料未完善"
         }}

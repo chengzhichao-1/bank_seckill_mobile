@@ -36,11 +36,12 @@ const productModule: Module<IProductState, IRootState> = {
         pageSize
       )
       console.log(productList)
-      commit("changeProductList", productList)
+      commit("changeProductList", productList.message)
     },
     async getProductDetailAction(context, payload) {
-      const res = await getProductDetail(payload.id)
-      return res
+      const { message: productDetail } = await getProductDetail(payload.id)
+      console.log("productDetail", productDetail)
+      return productDetail
     }
   }
 }

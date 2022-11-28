@@ -1,4 +1,4 @@
-import { hyhRequest } from ".."
+import { hyhRequest, czcRequest } from ".."
 
 enum OtherAPI {
   getAllAnnouncements = "/announcement/getAllAnnouncements", // 加载所有公告
@@ -7,19 +7,19 @@ enum OtherAPI {
 }
 
 export function getAllAnnouncements() {
-  return hyhRequest.post<any>({
+  return czcRequest.post<any>({
     url: OtherAPI.getAllAnnouncements
   })
 }
 
 export function loadAllImages() {
-  return hyhRequest.get<any>({
+  return czcRequest.post<any>({
     url: OtherAPI.loadAllImages
   })
 }
 
 export function getAllAQ() {
-  return hyhRequest.post<any>({
+  return czcRequest.get<any>({
     url: OtherAPI.getAllAQ
   })
 }

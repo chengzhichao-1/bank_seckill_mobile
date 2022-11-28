@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from "axios"
 import { ZCRequestConfig, ZCRequestInterceptors } from "./type"
 import { ComponentInstance } from "vant/lib/utils/basic"
 import { Toast } from "vant"
+import localCache from "@/utils/cache"
 
 const DEFAULT_LOADING = true
 
@@ -39,6 +40,9 @@ class ZCRequest {
             forbidClick: true
           })
         }
+        if (config.headers) {
+          config.headers["Authorization"] = localCache.getCache("token")
+        }
         return config
       },
       (err) => {
@@ -50,6 +54,10 @@ class ZCRequest {
       (res) => {
         // 将loading移除
         this.loading?.clear()
+        console.log("res", res)
+        if (res.data && res.data.status && res.data.status !== 200) {
+          Toast.fail(res.data.message)
+        }
         return res.data
         // 因为后端接口不规范 因此不方便拦截
         // const data = res.data

@@ -11,6 +11,7 @@
   "dependencies": {
     "amfe-flexible": "^2.2.1",
     "axios": "^0.24.0",
+    "caniuse-lite": "^1.0.30001434",
     "core-js": "^3.6.5",
     "dayjs": "^1.11.2",
     "js-md5": "^0.7.3",

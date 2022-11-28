@@ -5,6 +5,7 @@ import {
   codeCheck,
   enroll,
   loginByPassword,
+  loginByPassword2,
   sendCode
 } from "@/service/login/login"
 import { Toast } from "vant"
@@ -43,34 +44,38 @@ const loginModule: Module<ILoginState, IRootState> = {
   },
   actions: {
     async accountLoginAction({ commit }, payload: any) {
-      const { tel, password, noToast = false } = payload
+      const { tel, password, noToast = false, reLogin } = payload
       console.log(tel, password)
-
-      const loginResponse = await loginByPassword(tel, password)
+      let loginResponse
+      if (!reLogin) {
+        loginResponse = await loginByPassword(tel, password)
+      } else {
+        loginResponse = await loginByPassword2(tel, password)
+      }
       console.log(loginResponse)
-      if (loginResponse.status === 200) {
+      if (loginResponse?.status === 200) {
+        // 6.token存储
+        localCache.setCache("token", loginResponse.message.token)
+
         // 1. 存储手机号
         root.commit("changePhone", tel)
         localCache.setCache("phone", tel)
 
         // 2. 存储用户基础信息
-        const userBaseInfo = await getCustomerByPhoneNumber(tel)
-        commit("changeUserBaseInfo", userBaseInfo)
-        localCache.setCache("userBaseInfo", userBaseInfo)
+        // const userBaseInfo = await getCustomerByPhoneNumber(tel)
+        commit("changeUserBaseInfo", loginResponse.message.userInfo)
+        localCache.setCache("userBaseInfo", loginResponse.message.userInfo)
 
         // 3. 存储用户账号信息
         const userAccountInfo = await getMyInfo(tel)
-        commit("changeUserAccountInfo", userAccountInfo)
-        localCache.setCache("userAccountInfo", userAccountInfo)
+        commit("changeUserAccountInfo", userAccountInfo.message)
+        localCache.setCache("userAccountInfo", userAccountInfo.message)
 
         // 4. Toast提示登陆状态
         if (!noToast) Toast.success("登录成功")
 
         // 5. 路由跳转
         if (!noToast) router.push("/")
-
-        // 6.token存储
-        localCache.setCache("token", loginResponse.message.token)
       } else {
         Toast.fail("手机密码错误")
       }
@@ -100,17 +105,10 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     async accountRegisterAction(context, payload: any) {
       const { tel, code, password } = payload
-      const status = await codeCheck(tel, code)
+      const status = await codeCheck(tel, password, code)
       if (status === 200) {
-        const status2 = await enroll(tel, password)
-        if (status2 === 200) {
-          Toast.success("注册成功")
-          router.push("/login")
-        } else {
-          Toast.success("该手机号已注册")
-        }
-      } else {
-        Toast.fail("验证码错误")
+        Toast.success("注册成功")
+        router.push("/login")
       }
     },
     async refineInformationAction(context, payload: any) {
@@ -131,12 +129,13 @@ const loginModule: Module<ILoginState, IRootState> = {
         customerEmail,
         customerAddress
       )
-      if (code === 200) {
+      if (code.status === 200) {
         const noToast = true
         context.dispatch("accountLoginAction", {
           tel: customerPhoneNumber,
           password: customerPassword,
-          noToast
+          noToast,
+          reLogin: true
         })
       }
     },

@@ -51,22 +51,22 @@ const homeModule: Module<IHomeState, IRootState> = {
     async getSwipeImagesAction({ commit }) {
       const swipeImages = await loadAllImages()
       console.log(swipeImages)
-      commit("changeSwipeImages", swipeImages)
+      commit("changeSwipeImages", swipeImages.message)
     },
     async getCurrentProductsAction({ commit }) {
       const currentProducts = await getProductInActivity()
       console.log(currentProducts)
-      commit("changeCurrentProducts", currentProducts)
+      commit("changeCurrentProducts", currentProducts.message)
     },
     async getFutureProductsAction({ commit }) {
       const futureProducts = await getFutureProduct()
       console.log(futureProducts)
-      commit("changeFutureProducts", futureProducts)
+      commit("changeFutureProducts", futureProducts.message)
     },
     async getAnnouncementsActions({ commit }) {
       const announcements = await getAllAnnouncements()
       console.log(announcements)
-      commit("changeAnnouncements", announcements)
+      commit("changeAnnouncements", announcements.message)
     }
   }
 }

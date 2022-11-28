@@ -1,4 +1,5 @@
-import { hyhRequest, yhyRequest } from ".."
+import { hyhRequest, yhyRequest, czcRequest } from ".."
+import md5 from "js-md5"
 
 // 获取秒杀链接
 export function getPath(
@@ -46,15 +47,15 @@ export function orderSecKill(
 
 // 获取当前登陆用户
 export function getCustomerByPhoneNumber(phoneNumber: string) {
-  return hyhRequest.post<any>({
-    url: "/customer/getCustomerByPhoneNumber/" + phoneNumber
+  return czcRequest.post<any>({
+    url: "/users/getCustomerByPhoneNumber/" + phoneNumber
   })
 }
 
 // 获取当前登陆用户2
 export function getMyInfo(phoneNumber: string) {
-  return hyhRequest.post<any>({
-    url: "/customer/getMyInfo/" + phoneNumber
+  return czcRequest.post<any>({
+    url: "/users/getMyInfo/" + phoneNumber
   })
 }
 
@@ -83,11 +84,11 @@ export function getMySecKill(
 }
 
 // 通过手机号发送绑定的卡号
-export function sendCardByPhone(customerPhoneNumber: string) {
-  return yhyRequest.post<any>({
-    url: "/sendCard?customerPhoneNumber=" + customerPhoneNumber
-  })
-}
+// export function sendCardByPhone(customerPhoneNumber: string) {
+//   return yhyRequest.post<any>({
+//     url: "/sendCard?customerPhoneNumber=" + customerPhoneNumber
+//   })
+// }
 
 export function payByCard(
   orderID: string,
@@ -117,20 +118,29 @@ export function refineInformation(
   customerEmail: string,
   customerAddress: number
 ) {
-  return yhyRequest.post<any>({
-    url:
-      "/refine?customerPhoneNumber=" +
-      customerPhoneNumber +
-      "&customerName=" +
-      customerName +
-      "&customerIdType=" +
-      customerIdType +
-      "&customerIdNumber=" +
-      customerIdNumber +
-      "&customerEmail=" +
-      customerEmail +
-      "&customerAddress=" +
+  return czcRequest.post<any>({
+    // url:
+    //   "/refineInfo?customerPhoneNumber=" +
+    //   customerPhoneNumber +
+    //   "&customerName=" +
+    //   customerName +
+    //   "&customerIdType=" +
+    //   customerIdType +
+    //   "&customerIdNumber=" +
+    //   customerIdNumber +
+    //   "&customerEmail=" +
+    //   customerEmail +
+    //   "&customerAddress=" +
+    //   customerAddress
+    url: "/users/refineInfo",
+    params: {
+      customerPhoneNumber,
+      customerName,
+      customerIdType,
+      customerIdNumber,
+      customerEmail,
       customerAddress
+    }
   })
 }
 
@@ -138,74 +148,78 @@ export function refineInformation(
 export function bindCard(
   customerPhoneNumber: string,
   customerBankCard: string,
+  bankCardPassword: string,
   code: string
 ) {
-  return yhyRequest.post<any>({
-    url:
-      "/bind?customerPhoneNumber=" +
-      customerPhoneNumber +
-      "&customerBankCard=" +
-      customerBankCard +
-      "&code=" +
+  return czcRequest.post<any>({
+    url: "/users/bindCard",
+    data: {
+      customerPhoneNumber,
+      customerBankCard,
+      bankCardPassword: md5(bankCardPassword),
       code
+    }
   })
 }
 
 // 解绑银行卡
-export function unbindCard(customerBankCard: string, bankCardPassword: string) {
-  return yhyRequest.post<any>({
-    url:
-      "/UnbindBankCard?customerBankCard=" +
-      customerBankCard +
-      "&bankCardPassword=" +
-      bankCardPassword
+export function unbindCard(
+  customerPhoneNumber: string,
+  bankCardPassword: string
+) {
+  return czcRequest.post<any>({
+    url: "/users/unBindCard",
+    data: {
+      customerPhoneNumber,
+      bankCardPassword: md5(bankCardPassword)
+    }
   })
 }
 
 // 绑定银行卡后设置支付密码
-export function setPayPassword(
-  customerBankCard: string,
-  bankCardPassword: string
-) {
-  return yhyRequest.post<any>({
-    url:
-      "/set?customerBankCard=" +
-      customerBankCard +
-      "&bankCardPassword=" +
-      bankCardPassword
-  })
-}
+// export function setPayPassword(
+//   customerBankCard: string,
+//   bankCardPassword: string
+// ) {
+//   return yhyRequest.post<any>({
+//     url:
+//       "/set?customerBankCard=" +
+//       customerBankCard +
+//       "&bankCardPassword=" +
+//       bankCardPassword
+//   })
+// }
 
 // 修改登陆密码
-export function modifyLoginPassword(
-  customerPhoneNumber: string,
-  customerPassword: string,
-  oldCustomerPassword: string
-) {
-  return yhyRequest.post<any>({
-    url:
-      "/revise1?customerPhoneNumber=" +
-      customerPhoneNumber +
-      "&customerPassword=" +
-      customerPassword +
-      "&oldCustomerPassword=" +
-      oldCustomerPassword
-  })
-}
+// export function modifyLoginPassword(
+//   customerPhoneNumber: string,
+//   customerPassword: string,
+//   oldCustomerPassword: string
+// ) {
+//   return yhyRequest.post<any>({
+//     url:
+//       "/revise1?customerPhoneNumber=" +
+//       customerPhoneNumber +
+//       "&customerPassword=" +
+//       customerPassword +
+//       "&oldCustomerPassword=" +
+//       oldCustomerPassword
+//   })
+// }
 
 // 修改支付密码
-export function modifyPayPassword(
-  customerBankCard: string,
-  bankCardPassword: string,
-  oldBankCardPassword: string
-) {
-  return yhyRequest.post<any>({
-    url:
-      "/revise2?customerBankCard=" +
-      customerBankCard +
-      "&bankCardPassword=" +
-      bankCardPassword +
-      "&oldBankCardPassword=" +
-      oldBankCardPassword
-  })
-}
+// export function modifyPayPassword(
+//   customerBankCard: string,
+//   bankCardPassword: string,
+//   oldBankCardPassword: string
+// ) {
+//   return yhyRequest.post<any>({
+//     url:
+//       "/revise2?customerBankCard=" +
+//       customerBankCard +
+//       "&bankCardPassword=" +
+//       bankCardPassword +
+//       "&oldBankCardPassword=" +
+//       oldBankCardPassword
+//   })
+// }

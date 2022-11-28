@@ -1,4 +1,4 @@
-import { hyhRequest } from ".."
+import { hyhRequest, czcRequest } from ".."
 
 enum ProductAPI {
   getFutureProduct = "/product/getFutureProduct",
@@ -9,14 +9,14 @@ enum ProductAPI {
 
 // 获取未来产品信息
 export function getFutureProduct() {
-  return hyhRequest.post<any>({
+  return czcRequest.post<any>({
     url: ProductAPI.getFutureProduct
   })
 }
 
 // 获取产品详细信息
 export function getProductDetail(id: string) {
-  return hyhRequest.post<any>({
+  return czcRequest.post<any>({
     url: ProductAPI.getProductDetail + "/" + id
   })
 }
@@ -32,7 +32,7 @@ export function getProductList(
   curPage: number,
   pageSize: number
 ) {
-  return hyhRequest.post<any>({
+  return czcRequest.post<any>({
     url: ProductAPI.getProductList,
     data: {
       keyWords,
@@ -49,7 +49,7 @@ export function getProductList(
 
 // 获取当前产品信息
 export function getProductInActivity() {
-  return hyhRequest.post<any>({
+  return czcRequest.post<any>({
     url: ProductAPI.getProductInActivity
   })
 }

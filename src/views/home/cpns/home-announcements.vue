@@ -8,8 +8,10 @@
           v-for="(item, index) in announcements"
           :key="index"
         >
-          <p>{{ item.title }}</p>
-          <span>{{ item.lastUpdateTimeFormat.split(" ")[0] }}</span>
+          <p>{{ item?.title }}</p>
+          <span>{{
+            $filters.formatTime(new Date(item?.lastUpdateTime).getTime())
+          }}</span>
         </div>
       </div>
     </div>

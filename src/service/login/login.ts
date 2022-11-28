@@ -11,7 +11,7 @@ enum LoginAPI {
 enum LoginAPI2 {
   enroll = "/users/register", // 注册
   sendCode = "/users/sendMessage", // 发送验证码
-  codeCheck = "/login2", // 验证码校验
+  codeCheck = "/users/register", // 验证码校验
   loginByPassword = "/users/login" // 密码登录
 }
 
@@ -80,11 +80,30 @@ export function loginByPassword(
   })
 }
 
-export function codeCheck(customerPhoneNumber: string, code: string) {
-  return yhyRequest.post<any>({
-    url: LoginAPI.codeCheck,
-    params: {
+export function loginByPassword2(
+  customerPhoneNumber: string,
+  customerPassword: string
+) {
+  return czcRequest.post<any>({
+    url: LoginAPI2.loginByPassword,
+    data: {
       customerPhoneNumber,
+      customerPassword: customerPassword
+      // customerPassword
+    }
+  })
+}
+
+export function codeCheck(
+  customerPhoneNumber: string,
+  customerPassword: string,
+  code: string
+) {
+  return czcRequest.post<any>({
+    url: LoginAPI2.codeCheck,
+    data: {
+      customerPhoneNumber,
+      customerPassword: md5(customerPassword),
       code
     }
   })

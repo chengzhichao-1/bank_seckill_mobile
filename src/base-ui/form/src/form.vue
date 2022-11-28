@@ -91,6 +91,7 @@ export default defineComponent({
     const showPicker = ref(false)
 
     const handleSubmit = () => {
+      console.log("handleSubmit", formData.value)
       emit("handleSubmit", formData.value)
     }
     const handleSelectConfirm = (value: any, name: any) => {
