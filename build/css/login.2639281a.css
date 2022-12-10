@@ -1,1 +1,66 @@
-.zc-form[data-v-44ed9080]{display:flex;align-items:center;height:calc(100vh - 1.5385rem)}.zc-form .bgc[data-v-44ed9080]{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;background-size:100% 100%}.zc-form .content[data-v-44ed9080]{padding:.5128rem .7692rem;background-color:#fff}.zc-form .content h3[data-v-44ed9080]{position:relative;color:var(--theme-color);font-size:.5128rem;text-align:center;margin:0;width:8.4615rem}.zc-form .content h3[data-v-44ed9080]:after{position:absolute;bottom:0;left:50%;content:"";width:1.1538rem;height:.0513rem;background-color:var(--theme-color);transform:translate(-50%,.2564rem)}.zc-form .content .my-form[data-v-44ed9080]{margin:.4615rem auto}.btns[data-v-54c8aeca]{width:5.641rem;margin:0 auto;color:#999}.btns .two-btns[data-v-54c8aeca]{display:flex;justify-content:space-between;margin-bottom:.2564rem;align-items:center;font-size:.4103rem}.btns .underline[data-v-54c8aeca]{width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;margin:.2564rem auto;border-bottom:1px solid #999;font-size:.4103rem}[data-v-54c8aeca] .van-field__control{border:1px solid #ddd;height:1.0256rem;border-radius:1px;text-align:center;font-size:.4615rem}
+.zc-form[data-v-44ed9080] {
+  display: flex;
+  align-items: center;
+  height: calc(100vh - 1.5385rem);
+}
+.zc-form .bgc[data-v-44ed9080] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+}
+.zc-form .content[data-v-44ed9080] {
+  padding: 0.5128rem 0.7692rem;
+  background-color: #fff;
+}
+.zc-form .content h3[data-v-44ed9080] {
+  position: relative;
+  color: var(--theme-color);
+  font-size: 0.5128rem;
+  text-align: center;
+  margin: 0;
+  width: 8.4615rem;
+}
+.zc-form .content h3[data-v-44ed9080]:after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  content: "";
+  width: 1.1538rem;
+  height: 0.0513rem;
+  background-color: var(--theme-color);
+  transform: translate(-50%, 0.2564rem);
+}
+.zc-form .content .my-form[data-v-44ed9080] {
+  margin: 0.4615rem auto;
+}
+.btns[data-v-54c8aeca] {
+  width: 5.641rem;
+  margin: 0 auto;
+  color: #999;
+}
+.btns .two-btns[data-v-54c8aeca] {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.2564rem;
+  align-items: center;
+  font-size: 0.4103rem;
+}
+.btns .underline[data-v-54c8aeca] {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0.2564rem auto;
+  border-bottom: 1px solid #999;
+  font-size: 0.4103rem;
+}
+[data-v-54c8aeca] .van-field__control {
+  border: 1px solid #ddd;
+  height: 1.0256rem;
+  border-radius: 1px;
+  text-align: center;
+  font-size: 0.4615rem;
+}

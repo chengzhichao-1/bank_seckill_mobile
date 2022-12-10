@@ -76,8 +76,8 @@ export default defineComponent({
         props.productDetail.activityID,
         String(3)
       )
-      if (res.code === 200) {
-        handleOrderSecKill(res.obj)
+      if (res.data.status === 200) {
+        handleOrderSecKill(res.data.message)
       } else {
         Toast.fail(res.message)
       }

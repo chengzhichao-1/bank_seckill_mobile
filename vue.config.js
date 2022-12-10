@@ -47,7 +47,7 @@ module.exports = {
       vant: "vant",
       axios: "axios"
     },
-    plugins: [new BundleAnalyzerPlugin()]
+    // plugins: [new BundleAnalyzerPlugin()]
   },
   chainWebpack: (config) => {
     config.module
