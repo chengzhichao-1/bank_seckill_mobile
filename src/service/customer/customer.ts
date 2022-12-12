@@ -7,7 +7,7 @@ export function getPath(
   activityID: string,
   orderChannel: string
 ) {
-  return hyhRequest.post<any>({
+  return czcRequest.post<any>({
     url: "/order/getPath",
     data: {
       phoneNumber,
@@ -18,12 +18,17 @@ export function getPath(
 }
 
 // 获取秒杀结果
-export function getSeckillResult(phoneNumber: string, activityID: string) {
-  return hyhRequest.post<any>({
+export function getSeckillResult(
+  phoneNumber: string,
+  activityID: string,
+  customerNumber: string | number
+) {
+  return czcRequest.post<any>({
     url: "/order/getSeckillResult",
     data: {
       phoneNumber,
-      activityID
+      activityID,
+      customerNumber
     }
   })
 }
@@ -33,14 +38,16 @@ export function orderSecKill(
   phoneNumber: string,
   activityID: string,
   orderChannel: string,
-  path: string
+  path: string,
+  customerNumber: string | number
 ) {
-  return hyhRequest.post<any>({
+  return czcRequest.post<any>({
     url: "/order/" + path + "/orderSecKill",
     data: {
       phoneNumber,
       activityID,
-      orderChannel
+      orderChannel,
+      customerNumber
     }
   })
 }
@@ -69,7 +76,7 @@ export function getMySecKill(
   curPage: number,
   pageSize: number
 ) {
-  return hyhRequest.post<any>({
+  return czcRequest.post<any>({
     url: "/order/getMySecKill/",
     data: {
       customerID,
@@ -95,16 +102,18 @@ export function payByCard(
   phoneNumber: string,
   customerBankCard: string,
   bankCardPassword: string,
-  money: string
+  money: string,
+  deadLine: string
 ) {
-  return hyhRequest.post<any>({
+  return czcRequest.post<any>({
     url: "/order/bankPay",
     data: {
       orderID,
       phoneNumber,
       customerBankCard,
       bankCardPassword,
-      money
+      money,
+      deadLine
     }
   })
 }

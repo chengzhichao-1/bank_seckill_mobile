@@ -41,6 +41,7 @@ import { defineComponent, ref, computed } from "vue"
 import { useStore } from "vuex"
 import { payByCard } from "@/service/customer/customer"
 import localCache from "@/utils/cache"
+import md5 from "js-md5"
 
 export default defineComponent({
   emit: ["changeState"],
@@ -48,28 +49,31 @@ export default defineComponent({
     const store = useStore()
     const card = computed(() => store.state.login.userBaseInfo.customerBankCard)
     const password = ref("")
-    const truePassword = computed(
-      () => store.state.login.userBaseInfo.bankCardPassword
-    )
+    // const truePassword = computed(
+    //   () => store.state.login.userBaseInfo.bankCardPassword
+    // )
 
     const changeState = (s: number) => {
       if (s === 0) {
         emit("changeState", s)
       } else {
-        if (password.value === truePassword.value) {
-          payByCard(
-            localCache.getCache("payOrderPreview").orderID,
-            store.state.phone,
-            card.value,
-            password.value,
-            localCache.getCache("payOrderPreview").initialAmount
-          ).then(() => {
+        const newPWD = md5(password.value)
+        payByCard(
+          localCache.getCache("payOrderPreview").orderID,
+          store.state.phone,
+          card.value,
+          newPWD,
+          localCache.getCache("payOrderPreview").initialAmount,
+          localCache.getCache("payOrderPreview").deadLine
+        ).then((res) => {
+          console.log(res)
+          if (res.status === 200) {
             emit("changeState", s)
             Toast.success("支付成功~")
-          })
-        } else {
-          Toast.fail("密码错误")
-        }
+          } else {
+            Toast.fail("密码错误或余额不足")
+          }
+        })
       }
     }
     return {

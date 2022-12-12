@@ -104,7 +104,7 @@ export default defineComponent({
         const res = store.dispatch("login/getMyProductListAction", payload)
         res.then((res) => {
           console.log(res)
-          myProductList.value = res
+          myProductList.value = res.message
         })
       },
       {

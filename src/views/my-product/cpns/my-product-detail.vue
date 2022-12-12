@@ -13,7 +13,7 @@
               {{ item.startDateFormat?.split(" ")[0] }} ~
               {{ item.endDateFormat?.split(" ")[0] }}
             </p>
-            <p class="id">{{ item.order.id }}</p>
+            <p class="id">{{ item.id }}</p>
           </div>
           <div class="center">
             <div class="center-item">
@@ -21,7 +21,7 @@
               <p>年利率</p>
             </div>
             <div class="center-item">
-              <p>{{ item.order.estimatedEarnings }}元</p>
+              <p>{{ item.estimatedEarnings }}元</p>
               <p>预期收益</p>
             </div>
           </div>
@@ -29,7 +29,7 @@
 
         <div class="bottom">
           <div class="bottom-item">
-            <p>{{ item.order.productPrice }}元</p>
+            <p>{{ item.productPrice }}元</p>
             <p>金额</p>
           </div>
           <div class="bottom-item">
@@ -39,9 +39,9 @@
           <div class="bottom-item">
             <p>
               {{
-                item.order.orderChannel === 3
+                item.orderChannel === 3
                   ? "三湘银行卡"
-                  : item.order.orderChannel === 2
+                  : item.orderChannel === 2
                   ? "微信"
                   : "支付宝"
               }}

@@ -65,13 +65,14 @@ export default defineComponent({
       localCache.setCache("payOrderPreview", route.params)
     }
     // 判断缓存信息是否过期
-    if (
+    else if (
       !localCache.getCache("payOrderPreview")?.localCacheExpirationTimestamp ||
       new Date().getTime() >
         localCache.getCache("payOrderPreview")?.localCacheExpirationTimestamp
     ) {
       Toast.fail("支付信息已过期")
-      router.push("/")
+      console.log("支付信息已过期")
+      // router.push("/")
     }
     const changeState = (s: number) => {
       if (s === -1) {

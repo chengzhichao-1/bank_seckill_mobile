@@ -76,48 +76,57 @@ export default defineComponent({
         props.productDetail.activityID,
         String(3)
       )
-      if (res.data.status === 200) {
-        handleOrderSecKill(res.data.message)
+      console.log(res)
+      if (res.status === 200) {
+        handleOrderSecKill(res.message)
       } else {
         Toast.fail(res.message)
       }
     }
     // 获取秒杀记录
     const handleGetSecKillResult = async () => {
-      const res = await getSeckillResult(
-        store.state.phone,
-        props.productDetail.activityID
-      )
-      if (res.message === "Failed") {
-        handleGetSecKillResult()
-      } else if (res.message === "SUCCESS") {
-        Toast.success("抢购成功")
-        // 抢购成功后重新登陆以刷新用户个人信息
-        store.dispatch("login/accountLoginAction", {
-          tel: localCache.getCache("userBaseInfo").customerPhoneNumber,
-          password: localCache.getCache("userBaseInfo").customerPassword,
-          noToast: true
-        })
-        router.push({
-          path: "/pay",
-          name: "Pay",
-          params: {
-            name: props.productDetail.name,
-            initialAmount: props.productDetail.initialAmount,
-            deadLine: props.productDetail.deadLine,
-            rateOfReturn: props.productDetail.rateOfReturn,
-            deadLineDate: calcDeadLineDate(props.productDetail.deadLine),
-            expectedIncome: calcExpectedIncome(
-              props.productDetail.rateOfReturn,
-              props.productDetail.initialAmount,
-              props.productDetail.deadLine
-            ),
-            localCacheExpirationTimestamp:
-              new Date().getTime() + 24 * 60 * 60 * 1000,
-            orderID: res.obj
-          }
-        })
-      }
+      setTimeout(async () => {
+        const res = await getSeckillResult(
+          store.state.phone,
+          props.productDetail.activityID,
+          store.state.login.userBaseInfo.customerNumber
+        )
+        console.log("秒杀记录", res)
+        if (res.message === "正在秒杀中") {
+          handleGetSecKillResult()
+        } else if (res.message.substring(0, 4) === "抢购成功") {
+          Toast.success("抢购成功")
+          setTimeout(() => {
+            // 抢购成功后重新登陆以刷新用户个人信息
+            store.dispatch("login/accountLoginAction", {
+              tel: localCache.getCache("userBaseInfo").customerPhoneNumber,
+              password: localCache.getCache("userBaseInfo").customerPassword,
+              noToast: true,
+              reLogin: true
+            })
+            router.push({
+              name: "Pay",
+              params: {
+                name: props.productDetail.name,
+                initialAmount: props.productDetail.initialAmount,
+                deadLine: props.productDetail.deadLine,
+                rateOfReturn: props.productDetail.rateOfReturn,
+                deadLineDate: calcDeadLineDate(props.productDetail.deadLine),
+                expectedIncome: calcExpectedIncome(
+                  props.productDetail.rateOfReturn,
+                  props.productDetail.initialAmount,
+                  props.productDetail.deadLine
+                ),
+                localCacheExpirationTimestamp:
+                  new Date().getTime() + 24 * 60 * 60 * 1000,
+                orderID: res.message.substring(4, res.message.length)
+              }
+            })
+          }, 1000)
+        } else {
+          Toast.fail(res.message)
+        }
+      }, 1000)
     }
     // 秒杀
     const handleOrderSecKill = async (path: string) => {
@@ -125,9 +134,10 @@ export default defineComponent({
         store.state.phone,
         props.productDetail.activityID,
         String(3),
-        path
+        path,
+        store.state.login.userBaseInfo.customerNumber
       )
-      if (res.code === 0 || res.code === 200) {
+      if (res.status === 200) {
         Toast.success("排队中")
         setTimeout(() => {
           handleGetSecKillResult()
